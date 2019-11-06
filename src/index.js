@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import CounterReducer from './store/reducers/Counter';
+import CounterReducer from './store/reducers/counter';
 import StoreReducer from './store/reducers/Result';
 
 const reducer = combineReducers({
