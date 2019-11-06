@@ -3,10 +3,11 @@ import {connect} from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+import { stat } from 'fs';
 
 class Counter extends Component {
     state = {
-        counter: 0
+        counter: 0,
     }
 
     counterChangedHandler = ( action, value ) => {
@@ -27,6 +28,7 @@ class Counter extends Component {
     }
 
     render () {
+        console.log(this.props.storedResult)
         return (
             <div>
                 <CounterOutput value={this.props.ctr} />
@@ -34,14 +36,22 @@ class Counter extends Component {
                 <CounterControl label="Decrement" clicked={this.props.onDecrementCounter}  />
                 <CounterControl label="Add 5" clicked={this.props.onAddCounter}  />
                 <CounterControl label="Subtract 5" clicked={this.props.onSubCounter}  />
+                <hr/>
+                <button onClick={this.props.onStoreResult}>Show Result</button>
+                <ul>
+                    {this.props.storedResult.map(data =>(
+                        <li key={data.id}  onClick = {this.props.onDeleteResult}>{data.value}</li>
+                    ))}
+                </ul>
             </div>
         );
     }
 }
-
+// console.log(this.props.ctr)
 const mapStateToProps = state =>{
     return {
-        ctr : state.counter
+        ctr : state.counter,
+        storedResult : state.results
     }
 }
 
@@ -50,7 +60,9 @@ const mapDispatchToProps = dispatch =>{
         onIncrementCounter : () => dispatch({type:'INCREMENT',value:1}),
         onDecrementCounter : () => dispatch({type:'DECREMENT',value:1}),
         onAddCounter : () => dispatch({type:'ADD',value:5}),
-        onSubCounter : () => dispatch({type:'SUB',value:5})
+        onSubCounter : () => dispatch({type:'SUB',value:5}),
+        onStoreResult : () => dispatch({type:'STORE_RESULT'}),
+        onDeleteResult : () => dispatch({type:'DELETE_RESULT'})
     }
 }
 

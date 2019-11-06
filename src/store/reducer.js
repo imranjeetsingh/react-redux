@@ -1,29 +1,40 @@
+import { stat } from "fs"
+
 const initialState ={
-    counter : 0
+    counter : 0,
+    results :[]
 }
 
 const reducer = (state = initialState, action) => {
-    if(action.type === 'INCREMENT'){
-        return{
-            counter : state.counter+action.value
-        }
-    }
 
-    if(action.type === 'DECREMENT'){
+    switch(action.type){
+        case 'INCREMENT':
+            return{
+                ...state,
+                counter : state.counter+action.value
+            }
+        case 'DECREMENT':
+            return{
+                ...state,
+                counter : state.counter-action.value
+            }
+
+        case 'ADD':
+            return{
+                ...state,
+                counter : state.counter+action.value
+            }
+
+        case 'SUB':
         return{
+            ...state,
             counter : state.counter-action.value
         }
-    }
 
-    if(action.type === 'ADD'){
+        case 'STORE_RESULT':
         return{
-            counter : state.counter+action.value
-        }
-    }
-
-    if(action.type === 'SUB'){
-        return{
-            counter : state.counter-action.value
+            ...state,
+            results : state.results.concat({id: new Date(),value:state.counter})
         }
     }
 
