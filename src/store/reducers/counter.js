@@ -22,7 +22,7 @@ const reducer = (state = initialState, action) => {
                 counter : state.counter+action.value
             }
 
-        case 'SUB':
+        case 'SUBTRACT':
         return{
             ...state,
             counter : state.counter-action.value
